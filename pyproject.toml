@@ -17,6 +17,7 @@ gphoto-get = "gphoto_get:main"
 dev = [
     "pyinstaller",
     "ruff",
+    "pytest",
 ]
 
 [build-system]

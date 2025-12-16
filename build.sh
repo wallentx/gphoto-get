@@ -16,7 +16,7 @@ while getopts "f" opt; do
 done
 
 echo "Syncing dependencies..."
-uv sync
+uv sync --extra dev
 
 if [ "$FIX" = true ]; then
     echo "Linting and formatting (fixing errors)..."
