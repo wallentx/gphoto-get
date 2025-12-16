@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
     "requests",
-    "beautifulsoup4",
+    "justhtml",
     "rich",
 ]
 
@@ -16,6 +16,7 @@ gphoto-get = "gphoto_get:main"
 [project.optional-dependencies]
 dev = [
     "pyinstaller",
+    "ruff",
 ]
 
 [build-system]

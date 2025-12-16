@@ -2,7 +2,7 @@ import requests
 import argparse
 import sys
 from urllib.parse import urlparse, parse_qs
-from bs4 import BeautifulSoup
+from justhtml import JustHTML
 import re
 import json
 import os
@@ -125,15 +125,16 @@ def main():
         html_content = fetch_page_content(full_url, args.verbose)
         if not html_content: sys.exit(1)
 
-        soup = BeautifulSoup(html_content, 'html.parser')
-        script_tags = soup.find_all('script')
+        doc = JustHTML(html_content)
+        script_tags = doc.query('script')
         
         photo_entries_found = [] 
         
         status.update("[bold green]Parsing photos...")
         for script in script_tags:
-            if script.string and 'AF_initDataCallback' in script.string:
-                match = re.search(r'AF_initDataCallback\((.*?)\);?', script.string, re.DOTALL)
+            script_content = script.to_text()
+            if script_content and 'AF_initDataCallback' in script_content:
+                match = re.search(r'AF_initDataCallback\((.*?)\);?', script_content, re.DOTALL)
                 if match:
                     full_json_arg_str = match.group(1)
                     cleaned_json_str = full_json_arg_str.replace("'", '"')
