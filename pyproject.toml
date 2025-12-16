@@ -1,0 +1,23 @@
+[project]
+name = "gphoto-get"
+version = "0.1.0"
+description = "Google Photos Shared Album Downloader"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "requests",
+    "beautifulsoup4",
+    "rich",
+]
+
+[project.scripts]
+gphoto-get = "gphoto_get:main"
+
+[project.optional-dependencies]
+dev = [
+    "pyinstaller",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
