@@ -240,7 +240,7 @@ def main():
 
     # 4. Download Loop
     if not to_download:
-        console.print("[bold green]All photos up to date![/bold]")
+        console.print("[bold green]All photos up to date![/bold green]")
         sys.exit(0)
 
     success_count = 0

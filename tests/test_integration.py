@@ -59,3 +59,22 @@ def test_gphoto_get_integration():
         assert actual_sha256 == expected_sha256, (
             f"SHA256 mismatch. Expected {expected_sha256}, got {actual_sha256}"
         )
+
+        # --- Regression Test for MarkupError ---
+        # Run again with --sync. This should trigger "All photos up to date!"
+        # which previously caused a crash due to bad rich markup.
+        print(f"Running binary again with --sync in {tmpdirname}")
+        sync_result = subprocess.run(
+            [BINARY_PATH, target_url, "-o", tmpdirname, "--sync"],
+            capture_output=True,
+            text=True,
+        )
+
+        if sync_result.returncode != 0:
+            print("Sync Run STDOUT:", sync_result.stdout)
+            print("Sync Run STDERR:", sync_result.stderr)
+
+        assert sync_result.returncode == 0, "Binary execution failed in sync mode"
+        assert "All photos up to date!" in sync_result.stdout, (
+            "Did not find expected success message in sync mode output"
+        )
